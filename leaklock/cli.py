@@ -2,7 +2,6 @@ import sys
 from secret_scanner import scan_repo
 from installer import install_hook
 
-
 def main ():
     """
     Handles scan and install commands.
