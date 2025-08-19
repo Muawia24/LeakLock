@@ -1,4 +1,5 @@
 import re
+import math
 import sys
 import subprocess
 from typing import List
@@ -49,6 +50,36 @@ def read_staged_files(path: str) -> str:
     except subprocess.CalledProcessError:
         return ""
 
+
+def shannon_entropy(s: str) -> float:
+    """
+    Calculate Shannon entropy of a string.
+    Entropy measures how 'unpredictable' or 'random' the string is.
+    Higher entropy = more random.
+    Lower entropy = more predictable.
+    """
+
+    if not s:
+        return 0.0
+
+    freq = {}
+    for ch in s:
+        freq[ch] = freq.get(ch, 0) + 1
+
+    length = len(s)
+    entropy = 0.0
+
+    # Apply Shannon's entropy formula:
+    # H = -Σ (p * log2(p)), where p = frequency / length
+    for count in freq.values():
+        propability = count / length
+        entropy += propability * math.log2(propability)
+
+    return -entropy
+
+
+def scan_entropy(path: str, content: str) -> List[dict]:
+    pass
 
 def scan_content(path: str, content: str) -> List[tuple]:
     """
