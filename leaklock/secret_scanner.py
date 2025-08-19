@@ -11,6 +11,11 @@ PATTERNS = {
     "Slack Token": r"xox[baprs]-[A-Za-z0-9-]{10,48}",
 }
 
+CANDIDATE_PATTERNS = [
+    (re.compile(r"[A-Za-z0-9+/=]{20,}"), 4.2, "base64ish"),
+    (re.compile(r"\b[0-9a-fA-F]{32,}\b"), 3.2, "hexish"),
+]
+
 
 def get_staged_files() -> List[str]:
     """
@@ -79,9 +84,28 @@ def shannon_entropy(s: str) -> float:
 
 
 def scan_entropy(path: str, content: str) -> List[dict]:
-    pass
+    """"""
+    findings = []
 
-def scan_content(path: str, content: str) -> List[tuple]:
+    for i, line in enumerate(content.splitlines(), start=1):
+        for patt, threshold, label in CANDIDATE_PATTERNS:
+            for match in patt.findall(line):
+                H = shannon_entropy(match)
+                if H >= threshold:
+                    if re.search(r"(?i)(key|secret|token|password|auth)", line):
+                        findings.append({
+                            "file": path,
+                            "line": i,
+                            "rule_id": f"entropy_{label}",
+                            "match": match,
+                            "entropy": H,
+                            "context": line.strip()
+                        })
+    
+    return findings
+
+
+def scan_content(path: str, content: str) -> List[dict]:
     """
     Scan a file’s content for sensitive patterns (e.g., tokens, keys).
 
@@ -99,13 +123,22 @@ def scan_content(path: str, content: str) -> List[tuple]:
     findings = []
 
     for name, pattern in PATTERNS.items():
-        for match in re.finditer(pattern, content):
-            findings.append((path, name, match.group(0)))
+        for i, line in enumerate(content.splitlines(), start=1):
+            for match in re.finditer(pattern, line):
+                findings.append({
+                    "file": path,
+                    "line": i,
+                    "rule_id": name,
+                    "match": match.group(0),
+                    "context": line.stripe()
+                })
+
+    findings.extend(scan_entropy(path, content))
 
     return findings    
 
 
-def scan_repo() -> List[tuple]:
+def scan_repo() -> List[dict]:
     """
     Scan all staged files in the repository for sensitive information.
 
