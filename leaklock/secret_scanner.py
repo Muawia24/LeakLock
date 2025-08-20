@@ -16,6 +16,8 @@ CANDIDATE_PATTERNS = [
     (re.compile(r"\b[0-9a-fA-F]{32,}\b"), 3.2, "hexish"),
 ]
 
+seen = set()
+
 
 def get_staged_files() -> List[str]:
     """
@@ -93,14 +95,15 @@ def scan_entropy(path: str, content: str) -> List[dict]:
                 H = shannon_entropy(match)
                 if H >= threshold:
                     if re.search(r"(?i)(key|secret|token|password|auth)", line):
-                        findings.append({
-                            "file": path,
-                            "line": i,
-                            "rule_id": f"entropy_{label}",
-                            "match": match,
-                            "entropy": H,
-                            "context": line.strip()
-                        })
+                        if line.strip() not in seen:
+                            findings.append({
+                                "file": path,
+                                "line": i,
+                                "rule_id": f"entropy_{label}",
+                                "match": match,
+                                "entropy": H,
+                                "context": line.strip()
+                            })
     
     return findings
 
@@ -130,12 +133,14 @@ def scan_content(path: str, content: str) -> List[dict]:
                     "line": i,
                     "rule_id": name,
                     "match": match.group(0),
-                    "context": line.stripe()
+                    "context": line.strip()
                 })
+                seen.add(line.strip())
+    entropy_issues = scan_entropy(path, content)
+    findings.extend(entropy_issues)
+            
 
-    findings.extend(scan_entropy(path, content))
-
-    return findings    
+    return findings
 
 
 def scan_repo() -> List[dict]:
@@ -157,3 +162,18 @@ def scan_repo() -> List[dict]:
         all_findings.extend(scan_content(f,content))
 
     return all_findings
+
+
+if __name__ == "__main__":
+    issues = scan_repo()
+    if issues:
+        print("\n⚠️  Potential secrets found in staged files:\n")
+        for issue in issues:
+            print(f"[{issue['rule_id']}] {issue['file']}:{issue['line']} → {issue['match']}")
+            if "entropy" in issue:
+                print(f"    entropy={issue['entropy']}")
+            print(f"    line: {issue['context']}\n")
+        sys.exit(1)
+    else:
+        print("✅ No secrets found in staged files.")
+        sys.exit(0)
