@@ -18,6 +18,7 @@ exit 0
 """
 
 HOOK_SCRIPT_BAT = """@echo off
+echo Running LeakLock pre-commit hook...
 REM API Key Guardian pre-commit hook (Windows)
 leaklock
 IF %ERRORLEVEL% NEQ 0 (
