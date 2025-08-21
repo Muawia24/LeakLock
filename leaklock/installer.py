@@ -20,12 +20,14 @@ exit 0
 HOOK_SCRIPT_BAT = """@echo off
 echo Running LeakLock pre-commit hook...
 REM API Key Guardian pre-commit hook (Windows)
-leaklock
-IF %ERRORLEVEL% NEQ 0 (
-  echo Commit blocked by API Key Guardian (secrets detected).
-  EXIT /B 1
+
+call leaklock 
+if %RESULT% NEQ 0 (
+    echo Commit blocked by LeakLock (secrets detected).
+    exit /b 1
 )
-EXIT /B 0
+
+exit /b 0
 """
 
 def install_hook():

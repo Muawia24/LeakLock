@@ -6,7 +6,7 @@ from typing import List
 
 
 PATTERNS = {
-    "AWS Access Key ID": r"AKIA[0-9A-Z]{16}",
+    "AWS Access Key ID": r"AKIA[0-9A-Z]{12,20}",
     "GitHub Token": r"gh[pousr]_[A-Za-z0-9]{36}",
     "Slack Token": r"xox[baprs]-[A-Za-z0-9-]{10,48}",
     "Generic URI with credentials": r"[a-zA-Z][a-zA-Z0-9+.-]*:\/\/[^:\s]+:[^@\s]+@[^\/\s]+",

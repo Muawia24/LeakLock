@@ -10,11 +10,11 @@ def main ():
         install_hook()
         return
     
-    print("🔍 Scanning staged files for secrets...")
+    print("Scanning staged files for secrets...")
     issues = scan_repo()
 
     if issues:
-        print("\n⚠️  Potential secrets found in staged files:\n")
+        print("\n  Potential secrets found in staged files:\n")
         for issue in issues:
             print(f"[{issue['rule_id']}] {issue['file']}:{issue['line']} → {issue['match']}")
             if "entropy" in issue:
@@ -24,6 +24,6 @@ def main ():
         sys.exit(1)
         
     else:
-        print("✅ No secrets found in staged files.")
+        print(" No secrets found in staged files")
 
         sys.exit(0)
