@@ -13,7 +13,7 @@ def main ():
     if issues:
         print("\nPotential secrets found in staged files:\n")
         for issue in issues:
-            print(f"[{issue['rule_id']}] {issue['file']}:{issue['line']} → {issue['match']}")
+            print(f"[{issue['rule_id']}] {issue['file']}:{issue['line']} -- {issue['match']}")
             if "entropy" in issue:
                 print(f"    entropy={issue['entropy']}")
             print(f"    line: {issue['context']}\n")
