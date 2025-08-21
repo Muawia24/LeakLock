@@ -10,7 +10,7 @@ HOOK_SCRIPT_SH = """
 leaklock
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
-    echo "❌ Commit blocked by API Key Guardian (secrets detected)."
+    echo "Commit blocked by API Key Guardian (secrets detected)."
     exit 1
 fi
 
@@ -21,7 +21,7 @@ HOOK_SCRIPT_BAT = """@echo off
 REM API Key Guardian pre-commit hook (Windows)
 leaklock
 IF %ERRORLEVEL% NEQ 0 (
-  echo ❌ Commit blocked by API Key Guardian (secrets detected).
+  echo Commit blocked by API Key Guardian (secrets detected).
   EXIT /B 1
 )
 EXIT /B 0

@@ -9,6 +9,7 @@ PATTERNS = {
     "AWS Access Key ID": r"AKIA[0-9A-Z]{16}",
     "GitHub Token": r"gh[pousr]_[A-Za-z0-9]{36}",
     "Slack Token": r"xox[baprs]-[A-Za-z0-9-]{10,48}",
+    "Generic URI with credentials": r"[a-zA-Z][a-zA-Z0-9+.-]*:\/\/[^:\s]+:[^@\s]+@[^\/\s]+",
 }
 
 CANDIDATE_PATTERNS = [
@@ -162,18 +163,3 @@ def scan_repo() -> List[dict]:
         all_findings.extend(scan_content(f,content))
 
     return all_findings
-
-
-if __name__ == "__main__":
-    issues = scan_repo()
-    if issues:
-        print("\n⚠️  Potential secrets found in staged files:\n")
-        for issue in issues:
-            print(f"[{issue['rule_id']}] {issue['file']}:{issue['line']} → {issue['match']}")
-            if "entropy" in issue:
-                print(f"    entropy={issue['entropy']}")
-            print(f"    line: {issue['context']}\n")
-        sys.exit(1)
-    else:
-        print("✅ No secrets found in staged files.")
-        sys.exit(0)
