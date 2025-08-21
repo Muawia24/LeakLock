@@ -1,0 +1,10 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: local
+    hooks:
+      - id: leaklock
+        name: LeakLock secret scanner
+        entry: leaklock
+        language: python
+        types: [file]   # scan all files
+        files: ''       # optional: can limit to staged files
