@@ -34,11 +34,11 @@ def install_hook():
         print("⚠️  No .git directory found. Run this inside a Git repo.")
         return
     
-    hook_path = git_hooks / "pre-commit"
-
     if "windows" in platform.system().lower():
+        hook_path = git_hooks / "pre-commit.bat"
         hook_path.write_text(HOOK_SCRIPT_BAT)
     else:
+        hook_path = git_hooks / "pre-commit"
         hook_path.write_text(HOOK_SCRIPT_SH)
         os.chmod(hook_path, 0o775)
     
