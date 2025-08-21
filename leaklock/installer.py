@@ -19,7 +19,7 @@ exit 0
 
 HOOK_SCRIPT_BAT = """@echo off
 REM API Key Guardian pre-commit hook (Windows)
-api-key-guardian
+leaklock
 IF %ERRORLEVEL% NEQ 0 (
   echo ❌ Commit blocked by API Key Guardian (secrets detected).
   EXIT /B 1
@@ -28,7 +28,7 @@ EXIT /B 0
 """
 
 def install_hook():
-    git_hooks = Path(".git\hook")
+    git_hooks = Path(".git/hooks")
 
     if not git_hooks.exists():
         print("⚠️  No .git directory found. Run this inside a Git repo.")

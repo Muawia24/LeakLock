@@ -94,7 +94,7 @@ def scan_entropy(path: str, content: str) -> List[dict]:
             for match in patt.findall(line):
                 H = shannon_entropy(match)
                 if H >= threshold:
-                    if re.search(r"(?i)(key|secret|token|password|auth)", line):
+                    if re.search(r"(?i)(key|secret|token|password|auth|api|password)", line):
                         if line.strip() not in seen:
                             findings.append({
                                 "file": path,
