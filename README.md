@@ -1,4 +1,4 @@
-# 🔒 LeakLock
+# LeakLock
 **Stop secrets before they reach GitHub.**
 
 LeakLock is a lightweight security tool that **scans your code in real time and blocks commits containing API keys, tokens, or passwords**.  
@@ -6,17 +6,15 @@ It integrates with Git via a pre-commit hook, so secrets never leave your machin
 
 ---
 
-## ✨ Features
-- 🛡️ **Pre-commit protection** — blocks commits with secrets automatically.  
-- 🔍 **Multi-pattern detection** — supports AWS, GitHub, Slack, GCP, and more.  
-- 📊 **Entropy-based scanning** — detects unknown/novel secrets beyond regex rules.  
-- ⚡ **Cross-platform** — works on Linux, macOS, and Windows (via Git Bash/WSL).  
-- 🔗 **CI/CD ready** — can run in GitHub Actions, GitLab CI, or any pipeline.  
-- 🧠 (Optional) **LLM-powered detection** — reduce false positives and detect unknown formats.  
+## Features
+- Scans staged files for common secret patterns (AWS keys, GitHub tokens, Slack tokens, etc.)
+- Detects high-entropy strings that may indicate secrets
+- Blocks commits automatically when secrets are found
+- Works with the pre-commit framework for cross-platform support
 
 ---
 
-## 🚀 Installation
+## Installation
 Install from PyPI:
 
 ```bash
@@ -32,15 +30,22 @@ pip install -e .
 ```
 
 ##⚡ Quick Start
-Initialize LeakLock in your repo
+Install the hook in your repo
 
 ```bash
-leaklock install
+pre-commit install
 ```
 
 This adds a Git pre-commit hook.
 Make a commit
 
+## Usage
+Scan files manually:
+```bash
+leaklock path/to/file
+```
+
+Run on all staged files before commit:
 ```bash
 git add .
 git commit -m "test commit"
@@ -59,28 +64,12 @@ If clean → ✅ commit goes through.
 Fix or remove these values before committing.
 ```
 
-## ⚙️ Configuration
 
-LeakLock can be configured via a .leaklock.yml file:
-
-```yaml
-ignore_patterns:
-  - "tests/*"
-  - "*.md"
-
-allowlist:
-  - "DUMMY_KEY_12345"
-```
-
-
-🤝 Contributing
+## 🤝 Contributing
 Contributions are welcome!
-
-Fork the repo
-
-Create a feature branch (git checkout -b feature/new-scan)
-
-Submit a PR
+- Fork the repo
+- Create a feature branch (git checkout -b feature/new-scan)
+- Submit a PR
 
 📜 License
 MIT License © 2025 LeakLock Contributors
