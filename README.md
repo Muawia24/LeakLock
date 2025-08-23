@@ -29,8 +29,7 @@ cd leaklock
 pip install -e .
 ```
 
-## Quick Start
-Install the hook in your repo
+Install the hook in your repo:
 
 ```bash
 pre-commit install
@@ -38,6 +37,8 @@ pre-commit install
 
 This adds a Git pre-commit hook.
 Make a commit
+
+---
 
 ## Usage
 Scan files manually:
@@ -64,12 +65,15 @@ If clean → ✅ commit goes through.
 Fix or remove these values before committing.
 ```
 
+---
 
 ## Contributing
 Contributions are welcome!
 - Fork the repo
 - Create a feature branch (git checkout -b feature/new-scan)
 - Submit a PR
+
+---
 
 ## License
 MIT License © 2025 LeakLock Contributors
