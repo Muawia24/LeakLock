@@ -29,7 +29,7 @@ cd leaklock
 pip install -e .
 ```
 
-##⚡ Quick Start
+## Quick Start
 Install the hook in your repo
 
 ```bash
@@ -42,7 +42,7 @@ Make a commit
 ## Usage
 Scan files manually:
 ```bash
-leaklock path/to/file
+leaklock
 ```
 
 Run on all staged files before commit:
@@ -65,11 +65,11 @@ Fix or remove these values before committing.
 ```
 
 
-## 🤝 Contributing
+## Contributing
 Contributions are welcome!
 - Fork the repo
 - Create a feature branch (git checkout -b feature/new-scan)
 - Submit a PR
 
-📜 License
+## License
 MIT License © 2025 LeakLock Contributors
