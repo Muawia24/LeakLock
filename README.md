@@ -28,7 +28,18 @@ git clone https://github.com/your-username/leaklock.git
 cd leaklock
 pip install -e .
 ```
-
+Make sure you have ".pre-commit-config.yaml" file in your repo:
+```bash
+repos:
+  - repo: local
+    hooks:
+      - id: leaklock
+        name: LeakLock secret scanner
+        entry: leaklock
+        language: python
+        types: [file]   # scan all files
+        files: ''       # optional: can limit to staged files
+```
 Install the hook in your repo:
 
 ```bash
