@@ -27,7 +27,13 @@ Or install from source:
 git clone https://github.com/your-username/leaklock.git
 cd leaklock
 pip install -e .
+
 ```
+Install pre-requesties:
+```bash
+pip install requirements.txt
+```
+
 Make sure you have ".pre-commit-config.yaml" file in your repo:
 ```bash
 repos:
