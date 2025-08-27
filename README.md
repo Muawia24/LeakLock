@@ -24,7 +24,7 @@ pip install leaklock
 Or install from source:
 
 ```bash
-git clone https://github.com/your-username/leaklock.git
+git clone https://github.com/Muawia24/leaklock.git
 cd leaklock
 pip install -e .
 
@@ -43,8 +43,8 @@ repos:
         name: LeakLock secret scanner
         entry: leaklock
         language: python
-        types: [file]   # scan all files
-        files: ''       # optional: can limit to staged files
+        types: [file]
+        files: ''  
 ```
 Install the hook in your repo:
 
@@ -68,13 +68,13 @@ Run on all staged files before commit:
 git add .
 git commit -m "test commit"
 ```
-If secrets are found → ❌ commit is blocked with a warning.
+If secrets are found →  commit is blocked with a warning.
 
-If clean → ✅ commit goes through.
+If clean →  commit goes through.
 
-🔑 Example Output
+## Example Output
 ```bash
-❌ Commit blocked by LeakLock (secrets detected):
+Commit blocked by LeakLock (secrets detected):
 
 - AWS Access Key ID detected in app/config.py:23
 - Slack Token detected in utils/slack.py:10
